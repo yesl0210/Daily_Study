@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/txtContentsS"
+        android:text="내용"
+        android:textSize="20sp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_margin="60dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@drawable/round"
+        app:layout_constraintBottom_toTopOf="@+id/beforeS"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/beforeS"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/leftbtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContentsS" />
+
+    <Button
+        android:id="@+id/delS"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="112dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/deletebtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContentsS" />
+
+    <Button
+        android:id="@+id/nextS"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="32dp"
+        android:src="@drawable/rightbtn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContentsS" />
+
+    <Button
+        android:id="@+id/addS"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="112dp"
+        android:src="@drawable/plusbtn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContentsS" />
+
+    <!--<Button
+       android:id="@+id/showMeaningS"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="30dp"
+       android:text="의미 보기"
+       app:layout_constraintTop_toBottomOf="@+id/txtContentsS"
+       app:layout_constraintEnd_toStartOf="@+id/nextS"
+       app:layout_constraintLeft_toRightOf="@+id/beforeS"
+       app:layout_constraintRight_toLeftOf="@+id/nextS"
+       app:layout_constraintStart_toEndOf="@+id/beforeS" />-->
+
+
+</android.support.constraint.ConstraintLayout>
