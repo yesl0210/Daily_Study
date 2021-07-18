@@ -1,5 +1,5 @@
 # Daily_Study
-Daily Coding Study
+진행한 프로젝트 내역
 
 1. 정신건강 모니터링 및 분석 application 개발 
 1) 진행기간: 2019.03 ~ 2020.06
