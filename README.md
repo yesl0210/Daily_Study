@@ -8,8 +8,9 @@
 - 웨어러블 기기를 통해 심박수, 피부전도도 등 생체 신호를 측정하고 BLE 연결이 되어있는 스마트폰으로 데이터를 전송하는 안드로이드 기반의 어플리케이션 개발을 수행.
 - 심박수와 피부 전도도 데이터를 활용해 사용자의 불안 레벨 분석
 4) 사용한 Skill 또는 지식 : detrend API, moving average filter API, segmentation을 위한 numpy API, adaptive threshold, find_peaks API, android, python 3
-5) 결과/성과 : - KCC 논문 발표 : 임예슬, 차재욱, 신지은, 최아영, "정신 건강 모니터링을 위한 생체신호 기반 VR 치료 플랫폼," 정보과학회 KCC 2020, Online, July 2~4, 2020.
-https://github.com/xeaquz/VTrapist/wiki
+5) 결과/성과 :
+* KCC 논문 발표 : 임예슬, 차재욱, 신지은, 최아영, "정신 건강 모니터링을 위한 생체신호 기반 VR 치료 플랫폼," 정보과학회 KCC 2020, Online, July 2~4, 2020.
+* https://github.com/xeaquz/VTrapist/wiki
 
 ### 2. 유아교육 공간에 따른 유아 행동 인식 기술 개발
 1) 진행기간: 2020.09 ~ 진행중
