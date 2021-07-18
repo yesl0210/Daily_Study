@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.hugeterry.memorizingApp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--<uses-permission android:name="android.permission.CAMERA"/>!-->
+    <uses-permission android:name="android.permission.camera2" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="cn.hugeterry.memorizingApp.createS_Activity"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.createW_Activity"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.testW_Activity"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.testS_Activity"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.OCR"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.create_category"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.wrongNote_Activity"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.seeWord_Activity"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.seeSentence_Activity"></activity>
+        <activity android:name="cn.hugeterry.memorizingApp.MainActivity"></activity>
+        <activity android:name ="cn.hugeterry.memorizingApp.starActivity"></activity>
+        <activity android:name ="cn.hugeterry.memorizingApp.manual_main"></activity>
+        <activity android:name ="cn.hugeterry.memorizingApp.memo"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="cn.hugeterry.memorizingApp"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+
+        <!-- splash activity -->
+        <activity android:name="cn.hugeterry.memorizingApp.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+    </application>
+
+</manifest>
