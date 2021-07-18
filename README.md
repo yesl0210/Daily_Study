@@ -42,5 +42,5 @@ https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Patt
 6) 결과/성과:
 - 모바일 프로그래밍 강의 팀프로젝트 3위를 차지하여 과 내 프로젝트 포스터 발표를 진행.
 - 구글 플레이에 “암기하장”이라는 이름으로 앱 등록
-https://github.com/yesl0210/Daily_Study/tree/master/Project/%EC%95%94%EA%B8%B0%ED%95%98%EC%9E%A5/CoordinatorTabLayout-master/sample/src/main/java/cn/hugeterry/coordinatortablayoutdemo
+https://github.com/yesl0210/Daily_Study/tree/master/Project/%EC%95%94%EA%B8%B0%ED%95%98%EC%9E%A5
 
