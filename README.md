@@ -30,6 +30,7 @@ https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Patt
 * BLETest1Phone : 워치에 연결을 요청, 측정 시작, 멈춤, class 변경 등 명령어 전달
 * BLETest1Watch : 워치에서 측정한 생체 신호 데이터를 기기내 다운로드 폴더에 txt 형태로 저장하는 버전
 * SignalFirebase : 워치에서 측정중인 생체 신호 데이터를 실시간으로 파이어베이스로 전송하는 버전
+* uploadFile : 기기 로컬 download 폴더에 저장된 파일 중 하나를 선택해 파이어베이스 storage에 업로드
 
 ### 3. 단어 및 문장 암기 어플 ‘암기하장’ 개발
 1) 진행기간 : 2019.03 ~ 2019.06
