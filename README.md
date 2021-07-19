@@ -6,11 +6,13 @@
 2) 주요내용: 사용자가 공포증을 유발하는 영상을 보는 동안에 심박수, 피부전도도의 생체 신호를 실시간으로 측정하고 이를 통해 불안 레벨을 자동으로 분석함. 
 3) 본인이 공헌한 점 :
 - 웨어러블 기기를 통해 심박수, 피부전도도 등 생체 신호를 측정하고 BLE 연결이 되어있는 스마트폰으로 데이터를 전송하는 안드로이드 기반의 어플리케이션 개발을 수행.
-- 심박수와 피부 전도도 데이터를 활용해 사용자의 불안 레벨 분석
+- 심박수와 피부 전도도 데이터를 활용해 python3 기반 사용자의 불안 레벨 분석 알고리즘
 4) 사용한 Skill 또는 지식 : detrend API, moving average filter API, segmentation을 위한 numpy API, adaptive threshold, find_peaks API, android, python 3
 5) 결과/성과 :
 * KCC 논문 발표 : 임예슬, 차재욱, 신지은, 최아영, "정신 건강 모니터링을 위한 생체신호 기반 VR 치료 플랫폼," 정보과학회 KCC 2020, Online, July 2~4, 2020.
-* https://github.com/xeaquz/VTrapist/wiki
+* wiki : https://github.com/xeaquz/VTrapist/wiki
+* BLE를 통한 데이터 전송 앱 : https://github.com/xeaquz/VTrapist/tree/master/app
+* 사용자의 불안 레벨 분석 : https://github.com/xeaquz/VTrapist/tree/master/sensor_analysis
 
 ### 2. 유아교육 공간에 따른 유아 행동 인식 기술 개발
 1) 진행기간: 2020.09 ~ 진행중
@@ -42,5 +44,5 @@ https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Patt
 6) 결과/성과:
 - 모바일 프로그래밍 강의 팀프로젝트 3위를 차지하여 과 내 프로젝트 포스터 발표를 진행.
 - 구글 플레이에 “암기하장”이라는 이름으로 앱 등록
-https://github.com/yesl0210/Daily_Study/tree/master/Project/%EC%95%94%EA%B8%B0%ED%95%98%EC%9E%A5/CoordinatorTabLayout-master/sample/src/main/java/cn/hugeterry/coordinatortablayoutdemo
+https://github.com/yesl0210/Daily_Study/tree/master/Project/%EC%95%94%EA%B8%B0%ED%95%98%EC%9E%A5
 
