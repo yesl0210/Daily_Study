@@ -25,7 +25,7 @@
 - watch 용 앱 - FTP client를 구축하여 데이터 측정 종료 후, 데이터를 FTP 서버에 전송
 4) 사용한 Skill 또는 지식 : 블루투스 API, firebase storage API, apache Commons Net FTP API, sensor api, array adapter, hash map array list, 안드로이드 액티비티 생명주기, UUID, 블루투스 연결을 시키고 이 연결을 관리하기 위한 socket, Broadcast receiver, 연결 메커니즘을 수행하는 thread에 대한 이해, android
 5) 결과/성과:
-1대 다 멀티 블루투스 연결 기술, 블루투스 연결을 위해 필요한 각 thread에 대한 공부(연결 요청을 수신하는 accept thread, 연결을 요청하는 connect thread, 연결된 connection을 관리하는 connected thread), 파이어베이스 서버 구축 및 데이터 전송 경험
+1대 다 멀티 블루투스 연결 기술, 블루투스 연결을 위해 필요한 각 thread에 대한 공부(연결 요청을 수신하는 accept thread, 연결을 요청하는 connect thread, 연결된 connection을 관리하는 connected thread), 파이어베이스 서버 구축 및 데이터 전송 경험, FTP client 구축 및 FTP 서버로 데이터 전송 경험
 https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Pattern_Monitoring_App
 
 * BLETest1Phone : 워치에 연결을 요청, 측정 시작, 멈춤, class 변경 등 명령어 전달
