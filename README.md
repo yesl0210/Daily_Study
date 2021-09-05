@@ -7,7 +7,7 @@
 3) 본인이 공헌한 점 :
 - 웨어러블 기기를 통해 심박수, 피부전도도 등 생체 신호를 측정하고 블루투스 연결이 되어있는 스마트폰으로 데이터를 전송하는 안드로이드 기반의 어플리케이션 개발을 수행.
 - 심박수와 피부 전도도 데이터를 활용해 python3 기반 사용자의 불안 레벨 분석 알고리즘
-4) 사용한 Skill 또는 지식 : detrend API, moving average filter API, segmentation을 위한 numpy API, adaptive threshold, find_peaks API, android, python 3
+4) 사용한 Skill 또는 지식 : detrend API, moving average filter API, segmentation을 위한 numpy API, adaptive threshold, find_peaks API, android, python 3, android studio, java
 5) 결과/성과 :
 * KCC 논문 발표 : 임예슬, 차재욱, 신지은, 최아영, "정신 건강 모니터링을 위한 생체신호 기반 VR 치료 플랫폼," 정보과학회 KCC 2020, Online, July 2~4, 2020.
 * wiki : https://github.com/xeaquz/VTrapist/wiki
@@ -23,7 +23,7 @@
 - 연결 끊김시 알림 및 재연결 기능
 - 파이어베이스 기반 서버를 구축하여 웨어러블 디바이스에서 측정한 데이터를 서버에 전송.
 - watch 용 앱 - FTP client를 구축하여 데이터 측정 종료 후, 데이터를 FTP 서버에 전송
-4) 사용한 Skill 또는 지식 : 블루투스 API, firebase storage API, apache Commons Net FTP API, sensor api, array adapter, hash map array list, 안드로이드 액티비티 생명주기, UUID, 블루투스 연결을 시키고 이 연결을 관리하기 위한 socket, Broadcast receiver, 연결 메커니즘을 수행하는 thread에 대한 이해, android
+4) 사용한 Skill 또는 지식 : 블루투스 API, firebase storage API, apache Commons Net FTP API, sensor api, array adapter, hash map array list, 안드로이드 액티비티 생명주기, UUID, 블루투스 연결을 시키고 이 연결을 관리하기 위한 socket, Broadcast receiver, 연결 메커니즘을 수행하는 thread에 대한 이해, android studio, java
 5) 결과/성과:
 1대 다 멀티 블루투스 연결 기술, 블루투스 연결을 위해 필요한 각 thread에 대한 공부(연결 요청을 수신하는 accept thread, 연결을 요청하는 connect thread, 연결된 connection을 관리하는 connected thread), 파이어베이스 서버 구축 및 데이터 전송 경험, FTP client 구축 및 FTP 서버로 데이터 전송 경험
 https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Pattern_Monitoring_App
@@ -42,7 +42,7 @@ https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Patt
   --> 콘텐츠 암기, 컨텐츠 시험보기, 오답노트, 북마크 기능
 - tap layout api를 활용한 메인 화면 개발
 - 동적 view 추가를 활용한 영단어/문장 Test 기능
-5) 사용한 Skill 또는 지식: coordinator tab layout api, android SQLite, SQLite query 지식, pager adapter, view 동적 추가
+5) 사용한 Skill 또는 지식: coordinator tab layout api, android SQLite, SQLite query 지식, pager adapter, view 동적 추가, android studio, java
 6) 결과/성과:
 - 모바일 프로그래밍 강의 팀프로젝트 3위를 차지하여 과 내 프로젝트 포스터 발표를 진행.
 - 구글 플레이에 “암기하장”이라는 이름으로 앱 등록
