@@ -5,13 +5,13 @@
 1) 진행기간: 2019.03 ~ 2020.06
 2) 주요내용: 사용자가 공포증을 유발하는 영상을 보는 동안에 심박수, 피부전도도의 생체 신호를 실시간으로 측정하고 이를 통해 불안 레벨을 자동으로 분석함. 
 3) 본인이 공헌한 점 :
-- 웨어러블 기기를 통해 심박수, 피부전도도 등 생체 신호를 측정하고 BLE 연결이 되어있는 스마트폰으로 데이터를 전송하는 안드로이드 기반의 어플리케이션 개발을 수행.
+- 웨어러블 기기를 통해 심박수, 피부전도도 등 생체 신호를 측정하고 블루투스 연결이 되어있는 스마트폰으로 데이터를 전송하는 안드로이드 기반의 어플리케이션 개발을 수행.
 - 심박수와 피부 전도도 데이터를 활용해 python3 기반 사용자의 불안 레벨 분석 알고리즘
 4) 사용한 Skill 또는 지식 : detrend API, moving average filter API, segmentation을 위한 numpy API, adaptive threshold, find_peaks API, android, python 3
 5) 결과/성과 :
 * KCC 논문 발표 : 임예슬, 차재욱, 신지은, 최아영, "정신 건강 모니터링을 위한 생체신호 기반 VR 치료 플랫폼," 정보과학회 KCC 2020, Online, July 2~4, 2020.
 * wiki : https://github.com/xeaquz/VTrapist/wiki
-* BLE를 통한 데이터 전송 앱 : https://github.com/xeaquz/VTrapist/tree/master/app
+* 블루투스를 통한 데이터 전송 앱 : https://github.com/xeaquz/VTrapist/tree/master/app
 * 사용자의 불안 레벨 분석 : https://github.com/xeaquz/VTrapist/tree/master/sensor_analysis
 
 ### 2. 유아교육 공간에 따른 유아 행동 인식 기술 개발
@@ -19,12 +19,13 @@
 2) 주요 내용: 웨어러블 디바이스를 통해 유아의 가속도, 자이로, 심박수 등의 데이터를 수집하여 유아교육 공간 변화에 따른 유아의 행동 패턴을 정량적으로 인식하고, 행동에 따른 운동량을 분석하는 application.
 3) 본인이 공헌한 점 :
 - 웨어러블 디바이스에서 활용 가능한 안드로이드 기반 생체 신호 데이터 수집 앱 개발.
-- 스마트폰 1대와 웨어러블 디바이스 여러 대를 BLE를 통해 연결하여 신호 측정과 관련된 명령어 전달 및 명령어 수행.
+- 스마트폰 1대와 웨어러블 디바이스 여러 대를 블루투스를 통해 연결하여 신호 측정과 관련된 명령어 전달 및 명령어 수행.
 - 연결 끊김시 알림 및 재연결 기능
 - 파이어베이스 기반 서버를 구축하여 웨어러블 디바이스에서 측정한 데이터를 서버에 전송.
-4) 사용한 Skill 또는 지식 : BLE api, array adapter, hash map array list, 안드로이드 액티비티 생명주기, firebase storage API, UUID, BLE 연결을 시키고 이 연결을 관리하기 위한 socket, Broadcast receiver, sensor api, 연결 메커니즘을 수행하는 thread에 대한 이해, android
+- watch 용 앱 - FTP client를 구축하여 데이터 측정 종료 후, 데이터를 FTP 서버에 전송
+4) 사용한 Skill 또는 지식 : 블루투스 API, firebase storage API, apache Commons Net FTP API, sensor api, array adapter, hash map array list, 안드로이드 액티비티 생명주기, UUID, 블루투스 연결을 시키고 이 연결을 관리하기 위한 socket, Broadcast receiver, 연결 메커니즘을 수행하는 thread에 대한 이해, android
 5) 결과/성과:
-1대 다 멀티 BLE 연결 기술, BLE 연결을 위해 필요한 각 thread에 대한 공부(연결 요청을 수신하는 accept thread, 연결을 요청하는 connect thread, 연결된 connection을 관리하는 connected thread), 파이어베이스 서버 구축 및 데이터 전송 경험
+1대 다 멀티 블루투스 연결 기술, 블루투스 연결을 위해 필요한 각 thread에 대한 공부(연결 요청을 수신하는 accept thread, 연결을 요청하는 connect thread, 연결된 connection을 관리하는 connected thread), 파이어베이스 서버 구축 및 데이터 전송 경험
 https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Pattern_Monitoring_App
 
 * BLETest1Phone : 워치에 연결을 요청, 측정 시작, 멈춤, class 변경 등 명령어 전달
