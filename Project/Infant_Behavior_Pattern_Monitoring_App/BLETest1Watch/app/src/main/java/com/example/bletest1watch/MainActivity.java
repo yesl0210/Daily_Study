@@ -2,7 +2,9 @@ package com.example.bletest1watch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,10 +12,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +29,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.opencsv.CSVWriter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -62,9 +68,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public String fileName;
     private int fileVer;
 
+    // * FTP * //
+    private ConnectFTP ConnectFTP;
+    private FtpConnectThread mFtpConnectThread;
+    private FtpDisconnectThread mFtpDisconnectThread;
+    private FtpUploadThread mFtpUploadThread;
+    private String ip, userId, userPw;
+    private int port;
+    private Boolean conState, disconState, uploadState;
+    private stop_sensor mStop_sensor;
+
+
+
     // * Message code *
     public static final int REQUEST_ENABLE_BT = 1; // 블루투스 활성화 요청 메시지
     public static final int DISCOVERY_REQUEST = 2; // 기기가 검색될 수 있도록 활성화 요청 메시지
+    public static final int PERMISSIONS_REQUEST = 1; // 권한 요청
 
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
@@ -82,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 화면 켜두기
 
+        doCheckPermission();
         init();
         initBLE();
 
@@ -93,6 +113,31 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(discoverableIntent);
             }
         });
+    }
+
+    public void doCheckPermission() {
+        // 권한 X
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.BODY_SENSORS}, PERMISSIONS_REQUEST);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+            case PERMISSIONS_REQUEST :
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }
+                else {
+
+                }
+                break;
+        }
     }
 
     public void init() { // initialize & get sensor
@@ -112,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mStep = manager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         sensorData = new ArrayList<String>();
         copyData = new ArrayList<String>();
+
+        // for FTP
+        ConnectFTP = new ConnectFTP();
+
 
         timeT = new TimeThread();
         thread_state = false;
@@ -166,16 +215,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 case MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case Controller.STATE_CONNECTED:
-//                            setStatus("Connected to: " + connectingDevice.getName());
-//                            connectBtn.setEnabled(false);
                             break;
                         case Controller.STATE_CONNECTING:
-//                            setStatus("Connecting...");
-//                            connectBtn.setEnabled(false);
                             break;
                         case Controller.STATE_LISTEN:
                         case Controller.STATE_NONE:
-//                            setStatus("Not connected");
                             break;
                     }
                     break;
@@ -189,17 +233,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     Log.d("watch","Command : "+msg_split[0]);
                     Toast.makeText(getApplicationContext(), "Command : "+msg_split[0], Toast.LENGTH_SHORT).show();
 
-//                    if (msg_split[0].equals("start") && (controller.getState() == Controller.STATE_CONNECTED)){
-//                        start_sensor();
-//                    }
                     if (msg_split[0].equals("start") && (measureBtn.getText().toString().equals("NOT MEASURING"))){
-                        // Button.getText -> to String으로 변환을 해야 equals 인가??????
-                        // *****************************************************************************
                         if (connBtn.getText().toString().equals("NOT CONNECTED")){ // 연결된 상태가 아닐때
                             Toast.makeText(getApplicationContext(), "Not connected.\n"+"No start", Toast.LENGTH_SHORT).show();
                         }
                         else if (measureBtn.getText().toString().equals("NOT MEASURING")){ // 연결된 상태일때 & 측정중이 아닐때
                             start_sensor();
+                            conState = Boolean.FALSE;
+                            disconState = Boolean.FALSE;
+                            uploadState = Boolean.FALSE;
+
+                            // Thread 초기화
+                            if(mStop_sensor != null){
+                                mStop_sensor = null;
+                            }
+                            if (mFtpConnectThread != null) {
+                                mFtpConnectThread = null;
+                            }
+                            if (mFtpDisconnectThread != null) {
+                                mFtpDisconnectThread = null;
+                            }
+                            if (mFtpUploadThread != null) {
+                                mFtpUploadThread = null;
+                            }
                         }
                     }
                     else if (msg_split[0].equals("stop") && (measureBtn.getText().toString().equals("MEASURING..."))){
@@ -208,7 +264,51 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                             Toast.makeText(getApplicationContext(), "Not connected.\n"+"No stop", Toast.LENGTH_SHORT).show();
                         }
                         else if (measureBtn.getText().toString().equals("MEASURING...")){ // 연결된 상태일때 & 측정중일때
-                            stop_sensor();
+//                            stop_sensor(); // 기기에 저장
+
+                            try {
+                                // FTP 서버에 연결
+                                mStop_sensor = new stop_sensor();
+                                mStop_sensor.start();
+                                mStop_sensor.join(); // 얘가 끝날때까지 main이 기다려 줌.
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (msg_split[1].equals("1")){ // Network O
+                                ip = msg_split[2];
+                                port = Integer.parseInt(msg_split[3]);
+                                userId = msg_split[4];
+                                userPw = msg_split[5];
+                                Log.d(TAG,"ip: "+ip);
+                                Log.d(TAG,"port: "+port);
+                                Log.d(TAG,"userId: "+userId);
+                                Log.d(TAG,"userPw: "+userPw);
+
+
+                                try {
+                                    // FTP 서버에 연결
+                                    mFtpConnectThread = new FtpConnectThread();
+                                    mFtpConnectThread.start();
+                                    mFtpConnectThread.join(); // 얘가 끝날때까지 main이 기다려 줌.
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Log.d(TAG,"connect return state : "+conState); // 연결 성공보다 얘가 더 먼저 실행됨
+                                // 서버에 연결을 성공했다면 -> 업로드
+                                if(conState == Boolean.TRUE){
+                                    mFtpUploadThread = new FtpUploadThread(fileName);
+                                    mFtpUploadThread.start();
+
+                                    // 업로드에 성공했다면 -> 연결 끊기
+                                    if (uploadState == Boolean.TRUE){
+                                        mFtpDisconnectThread = new FtpDisconnectThread();
+                                        mFtpDisconnectThread.start();
+                                    }
+                                }
+
+                            }
                         }
                     }
                     else if (msg_split[0].equals("level")){
@@ -241,12 +341,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             try {
                 // Save total Data
 
-//                fileName = deviceID + "-" + time + "-" + fileVer + ".txt";
                 File f = new File(path, fileName);
                 Log.d(TAG, "Time thread : saveData - fileName : "+fileName);
                 FileWriter fw = new FileWriter(f, true); // 기존 파일에 append
                 Log.d(TAG, "Time thread : saveData() - fileWriter fw");
-//                FileWriter fw = new FileWriter(f, false);
                 PrintWriter out = new PrintWriter(fw);
 
                 // Deep copy (동시 수정을 피하기 위한)
@@ -255,8 +353,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Log.d(TAG, "Time thread : saveData - copyData : "+copyData.size());
                 out.println(copyData);
                 out.close();
-//                fileVer ++;
-//                Toast.makeText(getApplicationContext(), "Your data has been saved.",Toast.LENGTH_SHORT).show();
+
                 copyData.clear();
                 Log.d(TAG, "Time thread : saveData end");
 
@@ -270,41 +367,86 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    private class FtpConnectThread extends Thread {
+        public void run() {
+            boolean status = false;
+            status = ConnectFTP.ftpConnect(ip, userId, userPw, port);
+            if (status == true) {
+                conState = Boolean.TRUE;
+                Log.d(TAG, "Connection Success : "+conState);
+            } else {
+                conState = Boolean.FALSE;
+                Log.d(TAG, "Connection failed");
+            }
+        }
+    }
+
+    private class FtpDisconnectThread extends Thread {
+        public void run() {
+            boolean result = ConnectFTP.ftpDisConnect();
+            if (result == true) {
+                disconState = Boolean.TRUE;
+                Log.d(TAG, "Disconnection Success : "+disconState);
+            } else {
+                disconState = Boolean.FALSE;
+                Log.d(TAG, "Discconection failed");
+            }
+        }
+    }
+
+    private class FtpUploadThread extends Thread {
+        private String mName;
+
+        public FtpUploadThread(String name) {
+            this.mName = name;
+        }
+
+        public void run() {
+            boolean result = ConnectFTP.ftpUploadFile(mName);
+            if (result == true) {
+                uploadState = Boolean.TRUE;
+                Log.d(TAG, "File Upload Success : "+ uploadState);
+            } else {
+                uploadState = Boolean.TRUE;
+                Log.d(TAG, "File Upload failed");
+            }
+        }
+    }
+
     public void setFileName(){
         Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd_H_mm_ss");
         String time = mFormat.format(date);
-//            String deviceID = Build.ID;
-//            deviceID = deviceID.replace('.','_');
-//            Log.d("watch","device ID : "+deviceID);
         String deviceID = bluetoothAdapter.getName();
         Log.d(TAG,"Device name : "+deviceID);
-        // File name = device id + time
         fileName = deviceID + "-" + time + ".txt";
+        Log.d(TAG,"File name : "+fileName);
     }
 
 
     public void start_sensor(){
         measureBtn.setText("MEASURING...");
         saveN = 0;
-//        filever = 1;
         register();
         setFileName();
         timeT.re_start();
 
     }
 
-    public void stop_sensor(){
-        measureBtn.setText("NOT MEASURING");
-        timeT.cancel();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Log.i(TAG, "Main thread sleep interrupted");
+    private class stop_sensor extends Thread {
+        public void run() {
+            measureBtn.setText("NOT MEASURING");
+            timeT.cancel();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Log.i(TAG, "Main thread sleep interrupted");
+            }
+            saveData();
+            unregister();
         }
-        saveData();
-        unregister();
+
     }
 
     public void register() { // register listener
@@ -335,15 +477,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private class TimeThread extends Thread {
         private int timeValue = 0;
 
+
         public void run() {
-//            Log.d(TAG, "Time thread : run()");
             while (true) {
-//                timeValue++;  // 작업스레드 값 증가.
-//                Log.d(TAG, "Time thread : run()_while");
                 try {
                     timeValue++;
                     Thread.sleep(1000);   // 1000ms, 즉 1초 단위로 작업스레드 실행
-//                    Log.d(TAG, "Time thread : time value ++ : "+timeValue);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     Log.i(TAG, "Time thread interrupted");
@@ -355,9 +494,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         saveData();
 
                         saveN ++;
-//                        saveNumBtn.setText("Data save Number : "+saveN);
                         Log.d(TAG, "Time thread : save N -"+saveN);
-//                        sensorData.clear();
                     }
 
                 }
@@ -407,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 break;
 
             case Sensor.TYPE_STEP_COUNTER :
-                sensorData.add(tag+"+"+"stepC+"+time+"+"+event.values[0]);
+               sensorData.add(tag+"+"+"stepC+"+time+"+"+event.values[0]);
                 break;
         }
     }
@@ -420,9 +557,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onResume() {
         super.onResume();
-//        if(timeT != null){
-//            timeT = null;
-//        }
 
         if (controller != null) {
             if (controller.getState() == Controller.STATE_NONE) {
