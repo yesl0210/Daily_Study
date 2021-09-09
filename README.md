@@ -18,6 +18,7 @@ https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Patt
 * BLETest1Watch : 워치에서 측정한 생체 신호 데이터를 기기내 다운로드 폴더에 txt 형태로 저장하는 버전
 * SignalFirebase : 워치에서 측정중인 생체 신호 데이터를 실시간으로 파이어베이스로 전송하는 버전
 * uploadFile : 기기 로컬 download 폴더에 저장된 파일 중 하나를 선택해 파이어베이스 storage에 업로드
+* FTP : 기기 로컬 download 폴더에 저장된 파일 중 하나를 선택해 FTP 서버로 전송(FTP 서버 네트워크 정보 입력 필요)
 
 ### 2. 정신건강 모니터링 및 분석 application 개발 
 1) 진행기간: 2019.03 ~ 2020.06
