@@ -33,6 +33,7 @@ https://github.com/yesl0210/Daily_Study/tree/master/Project/Infant_Behavior_Patt
 * wiki : https://github.com/xeaquz/VTrapist/wiki
 * 블루투스를 통한 데이터 전송 앱 : https://github.com/xeaquz/VTrapist/tree/master/app
 * 사용자의 불안 레벨 분석 : https://github.com/xeaquz/VTrapist/tree/master/sensor_analysis
+* 사용자의 불안 레벨 분석 api 설명 : https://github.com/xeaquz/VTrapist/wiki/Emotion-Analysis-Api
 
 ### 1. 단어 및 문장 암기 어플 ‘암기하장’ 개발
 1) 진행기간 : 2019.03 ~ 2019.06
